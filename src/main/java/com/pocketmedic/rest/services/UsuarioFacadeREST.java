@@ -76,7 +76,14 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         System.out.println(id);
         return ejbUsuarioFacade.findUsuarioByIdRol(id);
     }
-
+    
+    @GET
+    @Path("titulos/{idRol}/{titulos}")
+    @Produces({"application/json"})
+    public List<Usuario> findUsuarioByTitulos (@PathParam ("idRol") String idRol, @PathParam ("titulos") String titulos){
+        return ejbUsuarioFacade.findUsuarioByTitulos(idRol, titulos);
+    }
+    
     @GET
     @Override
     @Produces({"application/json"})

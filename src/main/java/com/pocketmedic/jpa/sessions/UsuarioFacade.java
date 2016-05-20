@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -58,4 +59,19 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
 
     }
 
+    public List<Usuario> findUsuarioByTitulos(String idRol, String titulo) {
+        try {
+            Query query = em.createNativeQuery("SELECT * FROM USUARIOS u JOIN PROFESIONES_USUARIOS pu JOIN TITULOS_Y_CERTIFICADOS tc where u.id_usuario = pu.id_usuario and tc.id_profesiones=pu.id_profesiones and u.id_rol=?id_rol and tc.titulos =?titulos", Usuario.class);
+            query.setParameter("id_rol", idRol);
+            query.setParameter("titulos", titulo);
+            List<Usuario> results = (List<Usuario>) query.getResultList();
+            return results;
+
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
 }

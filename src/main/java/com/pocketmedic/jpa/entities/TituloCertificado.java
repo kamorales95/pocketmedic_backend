@@ -29,7 +29,7 @@ import javax.xml.bind.annotation.XmlTransient;
  * @author KEVIN MORALES
  */
 @Entity
-@Table(name = "titulos_y_certificados")
+@Table(name = "TITULOS_Y_CERTIFICADOS")
 @XmlRootElement
 @NamedQueries({
     @NamedQuery(name = "TituloCertificado.findAll", query = "SELECT t FROM TituloCertificado t"),
@@ -47,7 +47,7 @@ public class TituloCertificado implements Serializable {
     @Size(min = 1, max = 60)
     @Column(name = "titulos")
     private String titulos;
-   @JoinTable(name = "profesiones_usuarios", joinColumns = {
+   @JoinTable(name = "PROFESIONES_USUARIOS", joinColumns = {
         @JoinColumn(name = "id_profesiones", referencedColumnName = "id_profesiones")}, inverseJoinColumns = {
         @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")})
     @ManyToMany
