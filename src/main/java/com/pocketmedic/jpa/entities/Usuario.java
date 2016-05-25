@@ -120,6 +120,9 @@ public class Usuario implements Serializable {
     private List<Consulta> consultaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "medico")
     private List<Consulta> consultaList1;
+    
+    @Column(name="codigo_recuperacion_pass")
+    private String codigoRecuperacionPass;
 
     public Usuario() {
     }
@@ -281,6 +284,16 @@ public class Usuario implements Serializable {
     public void setIdRol(Rol idRol) {
         this.idRol = idRol;
     }
+
+    public String getCodigoRecuperacionPass() {
+        return codigoRecuperacionPass;
+    }
+
+    public void setCodigoRecuperacionPass(String codigoRecuperacionPass) {
+        this.codigoRecuperacionPass = codigoRecuperacionPass;
+    }
+    
+    
 
     @XmlTransient
     public List<Respuesta> getRespuestaList() {
