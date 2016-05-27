@@ -58,6 +58,15 @@ public class UsuarioFacade extends AbstractFacade<Usuario> {
         }
 
     }
+    
+    
+    public Usuario findByRecuperarContraseña(int idUsuario, String codigoRecuperacionPass){
+    return (Usuario) getEntityManager().createNamedQuery("Usuario.findByRecuperarContraseña ")
+            .setParameter("idUsuario",idUsuario )
+            .setParameter("codigoRecuperacionPass", codigoRecuperacionPass )
+            .getSingleResult();
+    
+    }
 
     public List<Usuario> findUsuarioByTitulos(String idRol, String titulo) {
         try {

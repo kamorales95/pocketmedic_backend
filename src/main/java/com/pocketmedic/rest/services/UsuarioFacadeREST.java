@@ -26,6 +26,7 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.container.AsyncResponse;
 import javax.ws.rs.container.Suspended;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 /**
@@ -45,7 +46,6 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     public UsuarioFacadeREST() {
         super(Usuario.class);
     }
-
 
     @PUT
     @Path("{id}")
@@ -76,14 +76,14 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         System.out.println(id);
         return ejbUsuarioFacade.findUsuarioByIdRol(id);
     }
-    
+
     @GET
     @Path("titulos/{idRol}/{titulos}")
     @Produces({"application/json"})
-    public List<Usuario> findUsuarioByTitulos (@PathParam ("idRol") String idRol, @PathParam ("titulos") String titulos){
+    public List<Usuario> findUsuarioByTitulos(@PathParam("idRol") String idRol, @PathParam("titulos") String titulos) {
         return ejbUsuarioFacade.findUsuarioByTitulos(idRol, titulos);
     }
-    
+
     @GET
     @Override
     @Produces({"application/json"})
@@ -105,6 +105,13 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return String.valueOf(super.count());
     }
 
+    @GET
+    @Path("RecuperarContraseña/{id}/{coigo}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public Usuario findByRecuperarContraseña(@PathParam("id") Integer id, @PathParam("codigo") String codigo) {
+        return ejbUsuarioFacade.findByRecuperarContraseña(id, codigo);
+    }
+
     @Override
     protected EntityManager getEntityManager() {
         return em;
@@ -120,22 +127,23 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     private Response doCreate(Usuario usuarios) {
         GsonBuilder gsonBuilder = new GsonBuilder();
         Gson gson = gsonBuilder.create();
-        
-        if (ejbUsuarioFacade.findByEmail(usuarios.getEmail())== null){
-            
+
+        if (ejbUsuarioFacade.findByEmail(usuarios.getEmail()) == null) {
+
             usuarios.setPassword(DigestUtil.cifrarPassword(usuarios.getPassword()));
             System.out.println("PASSWORD CIFRADA");
             System.out.println(usuarios.getPassword());
             super.create(usuarios);
-            
+
             return Response.ok()
                     .entity(gson.toJson("el usuario fue creado exitosamente"))
                     .build();
-        }else{
+        } else {
             return Response
                     .status(Response.Status.CONFLICT)
                     .entity(gson.toJson("el email ya esta registrado"))
                     .build();
-        }   }
+        }
+    }
 
 }
