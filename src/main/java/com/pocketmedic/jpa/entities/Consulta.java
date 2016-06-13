@@ -40,7 +40,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Consulta.findByDescripcion", query = "SELECT c FROM Consulta c WHERE c.descripcion = :descripcion"),
     @NamedQuery(name = "Consulta.findByPublico", query = "SELECT c FROM Consulta c WHERE c.publico = :publico"),
     @NamedQuery(name = "Consulta.findByUrlImage", query = "SELECT c FROM Consulta c WHERE c.urlImage = :urlImage"),
-    @NamedQuery(name = "Consulta.findByFechaCita", query = "SELECT c FROM Consulta c WHERE c.fechaCita = :fechaCita")})
+    @NamedQuery(name = "Consulta.findByFechaCita", query = "SELECT c FROM Consulta c WHERE c.fechaCita = :fechaCita"),
+    @NamedQuery(name = "Consulta.findByIdUsuario", query = "SELECT c FROM Consulta c WHERE c.usuario = :usuario")})
 public class Consulta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

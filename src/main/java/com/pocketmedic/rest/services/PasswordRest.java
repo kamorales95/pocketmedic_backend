@@ -59,8 +59,8 @@ public class PasswordRest {
             email.setSSL(true);
             email.setFrom("services@pocketmedic.com");
             email.setSubject("Restablecer Contraseña Pocket Medic");
-            email.setHtmlMsg("<div style=\"border-bottom:1px solid; text-align:center; background:#152836; display:inline-block; width:100%\"><img src=\"http://pocketmedicfrontend-startupcbi.rhcloud.com/images/logo.png\" alt=\"Botica\" style=\"width:5em; padding-top:1em\"><h1 style=\"margin:0; padding:0.5em 0.5em 0.5em 0; color:white; font-family:sans-serif; width:80%; display:inline-block; float:right; text-align:right\">Restablecer Contraseña</h1></div><div style=\"\">\n"
-                    + "          <p style=\"padding-left:2em; margin:2em 0 2em 0; font-family:sans-serif\">Abra el siguiente enlace para continuar con el proceso de recuperación <a href=\"http://localhost:8002/#/nuevacontraseña/" + user.getIdUsuario() + "/" + cd + "\">http://localhost:8002/#/nuevacontraseña/" + user.getIdUsuario() + "/" + cd + "</a></p>\n"
+            email.setHtmlMsg("<div style=\"border-bottom:1px solid; text-align:center; background:#152836; display:inline-block; width:100%\"><img src=\"http://pocketmedicfrontend-startupcbi.rhcloud.com/images/logo.png\" alt=\"Pocketmedic\" style=\"width:5em; padding-top:1em\"><h1 style=\"margin:0; padding:0.5em 0.5em 0.5em 0; color:white; font-family:sans-serif; width:80%; display:inline-block; float:right; text-align:right\">Restablecer Contraseña</h1></div><div style=\"\">\n"
+                    + "          <p style=\"padding-left:2em; margin:2em 0 2em 0; font-family:sans-serif\">Abra el siguiente enlace para continuar con el proceso de recuperación <a href=\"http://localhost:8001/#/nuevacontrase%C3%B1a/:idUsuario/:Codigo" + user.getIdUsuario() + "/" + cd + "\">http://localhost:8001/#/nuevacontrase%C3%B1a/:idUsuario/:Codigo" + user.getIdUsuario() + "/" + cd + "</a></p>\n"
                     + "      \n"
                     + "        </div>");
            

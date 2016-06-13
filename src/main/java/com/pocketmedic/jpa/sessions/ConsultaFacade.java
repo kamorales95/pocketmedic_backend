@@ -6,6 +6,8 @@
 package com.pocketmedic.jpa.sessions;
 
 import com.pocketmedic.jpa.entities.Consulta;
+import com.pocketmedic.jpa.entities.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -26,6 +28,12 @@ public class ConsultaFacade extends AbstractFacade<Consulta> {
 
     public ConsultaFacade() {
         super(Consulta.class);
+    }
+    
+       public List<Consulta> findByUsuario(Usuario usuario) {
+        return getEntityManager().createNamedQuery("Consulta.findByIdUsuario")
+                .setParameter("usuario", usuario)
+                .getResultList();
     }
     
 }

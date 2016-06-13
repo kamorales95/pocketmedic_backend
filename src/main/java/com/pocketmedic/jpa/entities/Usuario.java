@@ -132,6 +132,8 @@ public class Usuario implements Serializable {
         this.idUsuario = idUsuario;
     }
 
+   
+
     public Integer getIdUsuario() {
         return idUsuario;
     }
