@@ -7,9 +7,7 @@ package com.pocketmedic.jpa.entities;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.List;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -19,17 +17,15 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author KEVIN MORALES
+ * @author kevin
  */
 @Entity
 @Table(name = "CONSULTAS")
@@ -40,9 +36,9 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "Consulta.findByDescripcion", query = "SELECT c FROM Consulta c WHERE c.descripcion = :descripcion"),
     @NamedQuery(name = "Consulta.findByPublico", query = "SELECT c FROM Consulta c WHERE c.publico = :publico"),
     @NamedQuery(name = "Consulta.findByUrlImage", query = "SELECT c FROM Consulta c WHERE c.urlImage = :urlImage"),
-    @NamedQuery(name = "Consulta.findByFechaCita", query = "SELECT c FROM Consulta c WHERE c.fechaCita = :fechaCita"),
-    @NamedQuery(name = "Consulta.findByIdUsuario", query = "SELECT c FROM Consulta c WHERE c.usuario = :usuario")})
+    @NamedQuery(name = "Consulta.findByFechaCita", query = "SELECT c FROM Consulta c WHERE c.fechaCita = :fechaCita")})
 public class Consulta implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -60,14 +56,12 @@ public class Consulta implements Serializable {
     @Column(name = "fecha_cita")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCita;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idConsultas")
-    private List<Respuesta> respuestaList;
-    @JoinColumn(name = "usuario", referencedColumnName = "id_usuario")
+    @JoinColumn(name = "categoria", referencedColumnName = "id_profesiones")
     @ManyToOne(optional = false)
-    private Usuario usuario;
-    @JoinColumn(name = "medico", referencedColumnName = "id_usuario")
+    private TituloCertificado categoria;
+    @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")
     @ManyToOne(optional = false)
-    private Usuario medico;
+    private Usuario idUsuario;
 
     public Consulta() {
     }
@@ -116,29 +110,20 @@ public class Consulta implements Serializable {
         this.fechaCita = fechaCita;
     }
 
-    @XmlTransient
-    public List<Respuesta> getRespuestaList() {
-        return respuestaList;
+    public TituloCertificado getCategoria() {
+        return categoria;
     }
 
-    public void setRespuestaList(List<Respuesta> respuestaList) {
-        this.respuestaList = respuestaList;
+    public void setCategoria(TituloCertificado categoria) {
+        this.categoria = categoria;
     }
 
-    public Usuario getUsuario() {
-        return usuario;
+    public Usuario getIdUsuario() {
+        return idUsuario;
     }
 
-    public void setUsuario(Usuario usuario) {
-        this.usuario = usuario;
-    }
-
-    public Usuario getMedico() {
-        return medico;
-    }
-
-    public void setMedico(Usuario medico) {
-        this.medico = medico;
+    public void setIdUsuario(Usuario idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     @Override

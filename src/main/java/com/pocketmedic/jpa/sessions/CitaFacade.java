@@ -5,7 +5,10 @@
  */
 package com.pocketmedic.jpa.sessions;
 
-import com.pocketmedic.jpa.entities.CitaMedica;
+import com.pocketmedic.jpa.entities.Cita;
+import com.pocketmedic.jpa.entities.Consulta;
+import com.pocketmedic.jpa.entities.Usuario;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +18,8 @@ import javax.persistence.PersistenceContext;
  * @author Luis
  */
 @Stateless
-public class CitaMedicaFacade extends AbstractFacade<CitaMedica> {
+public class CitaFacade extends AbstractFacade<Cita> {
+
     @PersistenceContext(unitName = "PM-BackendPU")
     private EntityManager em;
 
@@ -24,8 +28,8 @@ public class CitaMedicaFacade extends AbstractFacade<CitaMedica> {
         return em;
     }
 
-    public CitaMedicaFacade() {
-        super(CitaMedica.class);
+    public CitaFacade() {
+        super(Cita.class);
     }
-    
+
 }

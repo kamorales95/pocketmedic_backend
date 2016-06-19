@@ -5,7 +5,8 @@
  */
 package com.pocketmedic.rest.services;
 
-import com.pocketmedic.jpa.entities.CitaMedica;
+import com.pocketmedic.jpa.entities.Cita;
+import com.pocketmedic.jpa.entities.Cita;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -24,53 +25,54 @@ import javax.ws.rs.Produces;
  * @author Luis
  */
 @Stateless
-@Path("citasmedicas")
-public class CitaMedicaFacadeREST extends AbstractFacade<CitaMedica> {
+@Path("citas")
+public class CitaFacadeREST extends AbstractFacade<Cita> {
+
     @PersistenceContext(unitName = "PM-BackendPU")
     private EntityManager em;
 
-    public CitaMedicaFacadeREST() {
-        super(CitaMedica.class);
+    public CitaFacadeREST() {
+        super(Cita.class);
     }
 
     @POST
     @Override
     @Consumes({"application/json"})
-    public void create(CitaMedica entity) {
+    public void create(Cita entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/json"})
-    public void edit(@PathParam("id") Integer id, CitaMedica entity) {
+    public void edit(@PathParam("id") String id, Cita entity) {
         super.edit(entity);
     }
 
     @DELETE
     @Path("{id}")
-    public void remove(@PathParam("id") Integer id) {
+    public void remove(@PathParam("id") String id) {
         super.remove(super.find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/json"})
-    public CitaMedica find(@PathParam("id") Integer id) {
+    public Cita find(@PathParam("id") String id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({"application/json"})
-    public List<CitaMedica> findAll() {
+    public List<Cita> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/json"})
-    public List<CitaMedica> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Cita> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
@@ -85,5 +87,5 @@ public class CitaMedicaFacadeREST extends AbstractFacade<CitaMedica> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

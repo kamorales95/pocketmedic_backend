@@ -97,13 +97,10 @@ public class Usuario implements Serializable {
     private String tarjetaProfesional;
     @Column(name = "estado")
     private Boolean estado;
-    
+
     @ManyToMany(mappedBy = "usuarioList")
     private List<TituloCertificado> tituloCertificadoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
-    private List<CitaMedica> citaMedicaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medico")
-    private List<CitaMedica> citaMedicaList1;
+
     @JoinColumns({
         @JoinColumn(name = "id_ciudad", referencedColumnName = "id_ciudad"),
         @JoinColumn(name = "id_departamento", referencedColumnName = "id_departamento")})
@@ -117,13 +114,14 @@ public class Usuario implements Serializable {
     private Rol idRol;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Respuesta> respuestaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "usuario")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
     private List<Consulta> consultaList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "medico")
-    private List<Consulta> consultaList1;
-    
-    @Column(name="codigo_recuperacion_pass")
+
+    @Column(name = "codigo_recuperacion_pass")
     private String codigoRecuperacionPass;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "idUsuario")
+    private List<Cita> citaList;
 
     public Usuario() {
     }
@@ -131,8 +129,6 @@ public class Usuario implements Serializable {
     public Usuario(Integer idUsuario) {
         this.idUsuario = idUsuario;
     }
-
-   
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -246,24 +242,6 @@ public class Usuario implements Serializable {
         this.tituloCertificadoList = tituloCertificadoList;
     }
 
-    @XmlTransient
-    public List<CitaMedica> getCitaMedicaList() {
-        return citaMedicaList;
-    }
-
-    public void setCitaMedicaList(List<CitaMedica> citaMedicaList) {
-        this.citaMedicaList = citaMedicaList;
-    }
-
-    @XmlTransient
-    public List<CitaMedica> getCitaMedicaList1() {
-        return citaMedicaList1;
-    }
-
-    public void setCitaMedicaList1(List<CitaMedica> citaMedicaList1) {
-        this.citaMedicaList1 = citaMedicaList1;
-    }
-
     public Ciudad getCiudad() {
         return ciudad;
     }
@@ -295,8 +273,6 @@ public class Usuario implements Serializable {
     public void setCodigoRecuperacionPass(String codigoRecuperacionPass) {
         this.codigoRecuperacionPass = codigoRecuperacionPass;
     }
-    
-    
 
     @XmlTransient
     public List<Respuesta> getRespuestaList() {
@@ -314,15 +290,6 @@ public class Usuario implements Serializable {
 
     public void setConsultaList(List<Consulta> consultaList) {
         this.consultaList = consultaList;
-    }
-
-    @XmlTransient
-    public List<Consulta> getConsultaList1() {
-        return consultaList1;
-    }
-
-    public void setConsultaList1(List<Consulta> consultaList1) {
-        this.consultaList1 = consultaList1;
     }
 
     @Override
@@ -348,6 +315,15 @@ public class Usuario implements Serializable {
     @Override
     public String toString() {
         return "com.pocketmedic.jpa.entities.Usuario[ idUsuario=" + idUsuario + " ]";
+    }
+
+    @XmlTransient
+    public List<Cita> getCitaList() {
+        return citaList;
+    }
+
+    public void setCitaList(List<Cita> citaList) {
+        this.citaList = citaList;
     }
 
 }

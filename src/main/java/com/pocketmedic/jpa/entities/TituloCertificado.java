@@ -8,6 +8,7 @@ package com.pocketmedic.jpa.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,6 +19,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,7 +38,7 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "TituloCertificado.findByIdProfesiones", query = "SELECT t FROM TituloCertificado t WHERE t.idProfesiones = :idProfesiones"),
     @NamedQuery(name = "TituloCertificado.findByTitulos", query = "SELECT t FROM TituloCertificado t WHERE t.titulos like :titulos")})
 public class TituloCertificado implements Serializable {
-    private static final long serialVersionUID = 1L;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
@@ -47,11 +49,15 @@ public class TituloCertificado implements Serializable {
     @Size(min = 1, max = 60)
     @Column(name = "titulos")
     private String titulos;
-   @JoinTable(name = "PROFESIONES_USUARIOS", joinColumns = {
+    @JoinTable(name = "PROFESIONES_USUARIOS", joinColumns = {
         @JoinColumn(name = "id_profesiones", referencedColumnName = "id_profesiones")}, inverseJoinColumns = {
         @JoinColumn(name = "id_usuario", referencedColumnName = "id_usuario")})
     @ManyToMany
     private List<Usuario> usuarioList;
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "categoria")
+    private List<Consulta> consultaList;
+    private static final long serialVersionUID = 1L;
 
     public TituloCertificado() {
     }
@@ -114,5 +120,14 @@ public class TituloCertificado implements Serializable {
     public String toString() {
         return "com.pocketmedic.jpa.entities.TituloCertificado[ idProfesiones=" + idProfesiones + " ]";
     }
-    
+
+    @XmlTransient
+    public List<Consulta> getConsultaList() {
+        return consultaList;
+    }
+
+    public void setConsultaList(List<Consulta> consultaList) {
+        this.consultaList = consultaList;
+    }
+
 }
