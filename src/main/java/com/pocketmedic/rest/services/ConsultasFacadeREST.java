@@ -81,10 +81,17 @@ public class ConsultasFacadeREST {
         
     }
     
-    @GET
+    /*@GET
     @Path("usuario/{id}")
     public List<Consulta> findByUsuario(@PathParam("id") Integer id) {
         return consultaFacade.findByUsuario(new Usuario(id));
+    }*/
+    
+    @GET
+    @Path("usuario/{id}")
+    @Produces({"application/json"})
+    public List<Consulta> findbyIdUsuario(@PathParam("id") Integer id) {
+        return consultaFacade.findByIdUsuario(id);
     }
     
 }

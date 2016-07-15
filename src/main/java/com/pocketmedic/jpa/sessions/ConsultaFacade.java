@@ -6,10 +6,13 @@
 package com.pocketmedic.jpa.sessions;
 
 import com.pocketmedic.jpa.entities.Consulta;
+import com.pocketmedic.jpa.entities.Respuesta;
 import com.pocketmedic.jpa.entities.Usuario;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -36,4 +39,17 @@ public class ConsultaFacade extends AbstractFacade<Consulta> {
                 .getResultList();
     }
     
+     public List<Consulta> findByIdUsuario(int idUsuario) {
+        try {
+            return (List<Consulta>) em.createNamedQuery("Respuesta.findByIdUsuario")
+                    .setParameter("idUsuario", idUsuario)
+                    .getResultList();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
+    }
+       
 }

@@ -31,7 +31,7 @@ public class RespuestaFacade extends AbstractFacade<Respuesta> {
         super(Respuesta.class);
     }
     
-      public List<Respuesta> findByIdUsuario(int idUsuario) {
+    /*  public List<Respuesta> findByIdUsuario(int idUsuario) {
         try {
             return (List<Respuesta>) em.createNamedQuery("Respuesta.findByIdUsuario")
                     .setParameter("idUsuario", idUsuario)
@@ -42,6 +42,6 @@ public class RespuestaFacade extends AbstractFacade<Respuesta> {
             return null;
         }
 
-    }
+    } */
     
 }

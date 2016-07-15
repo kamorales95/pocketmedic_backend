@@ -87,12 +87,12 @@ public class RespuestaFacadeREST extends AbstractFacade<Respuesta> {
         return super.find(id);
     }
 
-    @GET
+    /*@GET
     @Path("usuario/{id}")
     @Produces({"application/json"})
     public List<Respuesta> findbyIdUsuario(@PathParam("id") Integer id) {
         return ejbRespuestaFacade.findByIdUsuario(id);
-    }
+    }*/
 
     @GET
     @Override
