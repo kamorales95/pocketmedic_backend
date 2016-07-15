@@ -9,6 +9,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -29,12 +31,13 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Respuesta.findAll", query = "SELECT r FROM Respuesta r"),
     @NamedQuery(name = "Respuesta.findByIdRespuestas", query = "SELECT r FROM Respuesta r WHERE r.idRespuestas = :idRespuestas"),
+    @NamedQuery(name = "Respuesta.findByIdUsuario", query = "SELECT r FROM Respuesta r WHERE r.idConsultas.idUsuario.idUsuario = :idUsuario"),
     @NamedQuery(name = "Respuesta.findByDescripcion", query = "SELECT r FROM Respuesta r WHERE r.descripcion = :descripcion")})
 public class Respuesta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_respuestas")
     private Integer idRespuestas;
     @Size(max = 500)

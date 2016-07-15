@@ -5,11 +5,20 @@
  */
 package com.pocketmedic.rest.services;
 
+import com.nimbusds.jose.JOSEException;
 import com.pocketmedic.jpa.entities.Respuesta;
+import com.pocketmedic.jpa.entities.Usuario;
+import com.pocketmedic.jpa.sessions.RespuestaFacade;
+import com.pocketmedic.rest.auth.AuthUtils;
+import java.text.ParseException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -18,6 +27,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 /**
  *
@@ -26,8 +36,15 @@ import javax.ws.rs.Produces;
 @Stateless
 @Path("respuestas")
 public class RespuestaFacadeREST extends AbstractFacade<Respuesta> {
+
     @PersistenceContext(unitName = "PM-BackendPU")
     private EntityManager em;
+
+    @Context
+    private HttpServletRequest request;
+
+    @EJB
+    private RespuestaFacade ejbRespuestaFacade;
 
     public RespuestaFacadeREST() {
         super(Respuesta.class);
@@ -37,7 +54,17 @@ public class RespuestaFacadeREST extends AbstractFacade<Respuesta> {
     @Override
     @Consumes({"application/json"})
     public void create(Respuesta entity) {
-        super.create(entity);
+
+        try {
+            entity.setIdUsuario(new Usuario(
+                    Integer.parseInt(
+                            AuthUtils.getSubject(
+                                    request.getHeader(AuthUtils.AUTH_HEADER_KEY)))));
+            super.create(entity);
+
+        } catch (ParseException | JOSEException ex) {
+            Logger.getLogger(RespuestaFacadeREST.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     @PUT
@@ -58,6 +85,13 @@ public class RespuestaFacadeREST extends AbstractFacade<Respuesta> {
     @Produces({"application/json"})
     public Respuesta find(@PathParam("id") Integer id) {
         return super.find(id);
+    }
+
+    @GET
+    @Path("usuario/{id}")
+    @Produces({"application/json"})
+    public List<Respuesta> findbyIdUsuario(@PathParam("id") Integer id) {
+        return ejbRespuestaFacade.findByIdUsuario(id);
     }
 
     @GET
@@ -85,5 +119,5 @@ public class RespuestaFacadeREST extends AbstractFacade<Respuesta> {
     protected EntityManager getEntityManager() {
         return em;
     }
-    
+
 }

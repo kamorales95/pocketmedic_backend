@@ -6,8 +6,11 @@
 package com.pocketmedic.jpa.sessions;
 
 import com.pocketmedic.jpa.entities.Respuesta;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 
 /**
@@ -26,6 +29,19 @@ public class RespuestaFacade extends AbstractFacade<Respuesta> {
 
     public RespuestaFacade() {
         super(Respuesta.class);
+    }
+    
+      public List<Respuesta> findByIdUsuario(int idUsuario) {
+        try {
+            return (List<Respuesta>) em.createNamedQuery("Respuesta.findByIdUsuario")
+                    .setParameter("idUsuario", idUsuario)
+                    .getResultList();
+        } catch (NonUniqueResultException ex) {
+            throw ex;
+        } catch (NoResultException ex) {
+            return null;
+        }
+
     }
     
 }
